@@ -10,9 +10,6 @@ const JWT_SECRET = process.env.JWT_SECRET || 'my-super-secret-secret-key-12345!!
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
   try {
-    // SENSITIVE CONSOLE LOG: Logging raw request bodies with cleartext passwords!
-    console.log('[DEBUG] Registering user with payload:', JSON.stringify(req.body));
-
     const { email, password, name, role } = req.body;
 
     // MISSING VALIDATION: Does not check if email is valid format or if password is strong
@@ -37,11 +34,9 @@ router.post('/register', async (req, res) => {
       },
     });
 
-    // INCONSISTENT API RESPONSE: Returns the created user object directly, including password hash!
-    // This is a major security flaw.
     res.status(201).json({
       message: 'User registered successfully',
-      user,
+      user: user.id,
     });
   } catch (error) {
     // IMPROPER ERROR HANDLING: Leaking database errors and details
