@@ -12,9 +12,19 @@ router.post('/register', async (req, res) => {
   try {
     const { email, password, name, role } = req.body;
 
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
     // MISSING VALIDATION: Does not check if email is valid format or if password is strong
     if (!email || !password || !name) {
       return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    if(!emailRegex.test(email)) {
+      return res.status(400).json({error: 'Email is invalid'})
+    }
+
+    if(password.length < 8) {
+      return res.status(400).json({error: 'Password must be at least 8 characters long'})
     }
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -48,9 +58,6 @@ router.post('/register', async (req, res) => {
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
-    // SENSITIVE CONSOLE LOG: Logging plain-text passwords on login attempts!
-    console.log(`[AUTH] Login attempt for email: ${req.body.email} with password: ${req.body.password}`);
-
     const { email, password } = req.body;
 
     if (!email || !password) {
