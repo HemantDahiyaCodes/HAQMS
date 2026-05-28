@@ -115,8 +115,11 @@ router.patch("/:id", authenticate, async (req, res) => {
   try {
     const { status } = req.body;
 
-    if (!status) {
-      return res.status(400).json({ error: "Status is required" });
+    // Input validation to make sure status is provided
+    const validStatus = ["PENDING", "COMPLETED", "CANCELLED"];
+
+    if (!status || !validStatus.includes(status)) {
+      return res.status(400).json({ error: "Invalid or missing status. Allowed values: PENDING, COMPLETED, CANCELLED" });
     }
 
     const updated = await prisma.appointment.update({
@@ -128,7 +131,7 @@ router.patch("/:id", authenticate, async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Failed to update appointment", details: error.message });
+      .json({ error: "Failed to update appointment"});
   }
 });
 
