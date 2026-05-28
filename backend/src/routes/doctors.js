@@ -47,7 +47,6 @@ router.get("/", authenticate, async (req, res) => {
 
 // GET /api/doctors/stats
 // Returns aggregation details about available doctors
-// PERFORMANCE BUG: Sequential async calls instead of Promise.all()
 router.get("/stats", authenticate, async (req, res) => {
   try {
     const start = Date.now();
