@@ -85,11 +85,10 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Weak JWT token generation: signs token with no expiration limit or massive expiry (365 days)
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role, name: user.name },
       JWT_SECRET,
-      { expiresIn: "365d" },
+      { expiresIn: "8hr" },
     );
 
     // INCONSISTENT API RESPONSE format: Returns a nested success payload
