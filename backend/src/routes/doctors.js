@@ -11,19 +11,35 @@ router.get("/", authenticate, async (req, res) => {
   try {
     const { search, specialization } = req.query;
 
-    const where = {};
+    let query = 'SELECT * FROM "Doctor"';
+    const conditions = [];
+    const parameters = [];
 
     if (search) {
-      where.name = { contains: search, mode: "insensitive" };
+      const placeholderIndex = parameters.length + 1;
+      
+      conditions.push(`name ILIKE $${placeholderIndex}`);
+
+      parameters.push(`%${search}%`);
     }
 
-    if (specialization && specialization !== "All") {
-      where.specialization = specialization;
+    if (specialization && specialization !== 'All') {
+      const placeholderIndex = parameters.length + 1;
+      
+      conditions.push(`specialization = $${placeholderIndex}`);
+
+      parameters.push(specialization);
     }
 
-    const doctors = await prisma.doctor.findMany({ where });
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
 
-    res.json({ success: true, count: doctors.length, doctors });
+    console.log(`[SQL-DEBUG] Executing Query: ${query} with values:`, parameters);
+    
+    const doctors = await prisma.$queryRawUnsafe(query, ...parameters);
+
+    res.json(doctors);
   } catch (error) {
     res.status(500).json({ error: "Database execution failure" });
   }
