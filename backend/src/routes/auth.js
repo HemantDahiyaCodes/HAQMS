@@ -123,7 +123,7 @@ router.get("/me", authenticate, async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.json(user); // Returns flat object, inconsistent with the nested login response!
+    res.json(user); // Returns flat object, consistent with the login and register response!
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
