@@ -91,18 +91,14 @@ router.post("/login", async (req, res) => {
       { expiresIn: "8hr" },
     );
 
-    // INCONSISTENT API RESPONSE format: Returns a nested success payload
-    // Different from registration response style
     res.json({
       status: "success",
-      data: {
-        token,
-        user: {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        },
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
       },
     });
   } catch (error) {
