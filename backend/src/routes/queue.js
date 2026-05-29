@@ -24,7 +24,7 @@ router.get('/', authenticate, async (req, res) => {
       orderBy: { createdAt: 'asc' },
     });
 
-    res.json(tokens);
+    res.json({ success: true, count: tokens.length, tokens });
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve queue', details: error.message });
   }
