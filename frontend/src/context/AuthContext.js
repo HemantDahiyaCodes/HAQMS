@@ -40,9 +40,8 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     setError(null);
 
-    console.log(`${process.env.NEXT_PUBLIC_API_BASE_URL}`);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,8 +56,8 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Inconsistent API returns nested success format for login
-      const receivedToken = data.data.token;
-      const receivedUser = data.data.user;
+      const receivedToken = data.token;
+      const receivedUser = data.user;
 
       // SECURITY ISSUE: Storing sensitive auth credentials directly in LocalStorage!
       localStorage.setItem("haqms_token", receivedToken);
