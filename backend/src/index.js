@@ -7,7 +7,7 @@ const cors = require("cors");
 
 // Enable CORS for all origins (weak/broad CORS config)
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL, process.env.PRODUCTION_URL],
+  origin: process.env.FRONTEND_URL,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }
