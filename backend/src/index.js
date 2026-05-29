@@ -5,12 +5,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const cors = require("cors");
 
-// Enable CORS for all origins (weak/broad CORS config)
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL, process.env.PRODUCTION_URL],
+  origin: ['http://localhost:3000', 'https://haqms-psi.vercel.app'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-}
+};
 app.use(cors(corsOptions));
 
 app.use(express.json());
