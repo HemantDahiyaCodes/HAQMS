@@ -31,17 +31,26 @@ router.get('/', authenticate, async (req, res) => {
       where.gender = {equals: gender, mode: 'insensitive'};
     }
 
-    // In-memory pagination setup
+    // Db level pagination and parllel operations
+    const [totalPatients, patients] = await Promise.all([
+      prisma.patient.count({where}),
+      prisma.patient.findMany({
+        where,
+        orderBy: {createdAt: 'desc'},
+        skip: offset,
+        take: limit,
+      })
+    ])
 
-    // Inconsistent Response style
+
     res.json({
       success: true,
-      patients: paginatedResult,
+      patients,
       pagination: {
         page,
         limit,
-        totalPatients: filteredPatients.length,
-        totalPages,
+        totalPatients,
+        totalPages: Math.ceil(totalPatients/ limit),
       },
     });
   } catch (error) {
@@ -65,7 +74,7 @@ router.get('/:id', authenticate, async (req, res) => {
       return res.status(404).json({ error: 'Patient not found' });
     }
 
-    res.json(patient);
+    res.json({success: true, patient});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
