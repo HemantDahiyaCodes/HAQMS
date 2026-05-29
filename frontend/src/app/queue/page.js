@@ -5,7 +5,8 @@ import Navbar from "@/components/common/Navbar";
 import { Activity, Bell, Monitor, RefreshCw, AlertCircle } from "lucide-react";
 
 export default function QueueMonitor() {
-  const { API_BASE_URL } = useAuth();
+  const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
   const [tokens, setTokens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,7 +23,8 @@ export default function QueueMonitor() {
         throw new Error("Failed to retrieve active token queue.");
       }
       const data = await res.json();
-      setTokens(data);
+      // FIX: Handle updated API response shape
+      setTokens(data.tokens || data);
       setError("");
     } catch (err) {
       console.error("Queue poll fetch error:", err);
