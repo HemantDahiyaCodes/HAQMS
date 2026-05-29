@@ -6,9 +6,6 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 // GET /api/reports/doctor-stats
-// Highly inefficient nested loop aggregate reporting for admin/receptionists dashboard
-// PERFORMANCE BUG: Performs multiple nested DB queries inside a loop for every doctor.
-// Runs sequentially, blocking/scaling terrible with doctors count.
 router.get("/doctor-stats", authenticate, async (req, res) => {
   try {
     const doctors = await prisma.doctor.findMany({
@@ -51,3 +48,5 @@ router.get("/doctor-stats", authenticate, async (req, res) => {
     res.status(500).json({ error: "Failed to generate report" });
   }
 });
+
+module.exports = router;
