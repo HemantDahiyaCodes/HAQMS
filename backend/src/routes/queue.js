@@ -72,12 +72,13 @@ router.post('/checkin', authenticate, async (req, res) => {
     });
 
     res.status(201).json({
+      success: true,
       message: 'Checked in successfully. Token generated.',
       token: newToken,
     });
   } catch (error) {
     console.error('Queue check-in error:', error);
-    res.status(500).json({ error: 'Check-in failed', details: error.message });
+    res.status(500).json({ error: 'Check-in failed' });
   }
 });
 
@@ -100,7 +101,7 @@ router.patch('/:id', authenticate, async (req, res) => {
       },
     });
 
-    res.json(updatedToken);
+    res.json({ success: true, token: updatedToken });
   } catch (error) {
     res.status(500).json({ error: 'Failed to update queue token', details: error.message });
   }
