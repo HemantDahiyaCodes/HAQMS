@@ -66,7 +66,7 @@ router.get('/:id', authenticate, async (req, res) => {
     const patient = await prisma.patient.findUnique({
       where: { id: req.params.id },
       include: {
-        appointments: true, // Fetching relation direct
+        appointments: true,
       },
     });
 
@@ -121,8 +121,6 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 // DELETE /api/patients/:id
-// SECURITY BUG: The route relies on authorizeAdminOnlyLegacy, which has the bypassed admin validation check!
-// This allows any receptionist or doctor to delete a patient.
 router.delete('/:id', authenticate, authorizeAdminOnlyLegacy, async (req, res) => {
   try {
     const { id } = req.params;
