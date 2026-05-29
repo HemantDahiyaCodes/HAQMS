@@ -9,7 +9,7 @@ const cors = require("cors");
 const corsOptions = {
   origin: [process.env.FRONTEND_URL, process.env.PRODUCTION_URL],
   credentials: true,
-  methods: 'GET, POST, PUT, DELETE',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 }
 app.use(cors(corsOptions));
 
