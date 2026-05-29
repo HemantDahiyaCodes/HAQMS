@@ -66,23 +66,23 @@ As an internship candidate, your evaluation is divided into five core objectives
 
 ### 🔍 Challenge 1: Security Audit
 Identify and patch several production-level security bugs:
-- **Credential Logging**: Find where raw user passwords are logged in plain text.
-- **Leaky Token Signature**: Audit how JWTs are signed, stored, and verified.
-- **SQL Injection**: Locate the search input vulnerable to SQL injection and rewrite it using parameterized queries.
-- **Bypassed Authorization**: Find the admin action endpoint that fails to enforce actual role authorizations.
+- **Credential Logging**: Find where raw user passwords are logged in plain text. ✅
+- **Leaky Token Signature**: Audit how JWTs are signed, stored, and verified. ✅
+- **SQL Injection**: Locate the search input vulnerable to SQL injection and rewrite it using parameterized queries. ✅
+- **Bypassed Authorization**: Find the admin action endpoint that fails to enforce actual role authorizations. ✅
 
 ### ⚡ Challenge 2: Backend Performance & Concurrency
 Analyze and optimize backend logic:
-- **N+1 Database Queries**: Identify the endpoint fetching core list elements but executing separate queries per row in a loop.
-- **Event-Loop Blocking**: Locate sequential async database queries where parallel triggers should be utilized.
-- **Slow aggregation endpoint**: Fix the slow nested report endpoint that locks the event loop.
-- **Check-in Token Race Condition**: Find why concurrent direct check-ins assign duplicate token numbers and patch it using transaction locks or auto-increment sequences.
+- **N+1 Database Queries**: Identify the endpoint fetching core list elements but executing separate queries per row in a loop. ✅
+- **Event-Loop Blocking**: Locate sequential async database queries where parallel triggers should be utilized. ✅
+- **Slow aggregation endpoint**: Fix the slow nested report endpoint that locks the event loop. ✅
+- **Check-in Token Race Condition**: Find why concurrent direct check-ins assign duplicate token numbers and patch it using transaction locks or auto-increment sequences. ✅
 
 ### 💾 Challenge 3: Database & Schema Optimization
 Refactor DB layers:
-- **Schema Vulnerabilities**: Locate the missing constraints that permit double-booking the same physician at the exact same millisecond slot.
-- **Missing Indices**: Add appropriate indices to speed up foreign key relationships and status filters under load.
-- **Paging Optimization**: Fix the listing route that performs in-memory pagination slicing instead of SQL pagination.
+- **Schema Vulnerabilities**: Locate the missing constraints that permit double-booking the same physician at the exact same millisecond slot. ✅
+- **Missing Indices**: Add appropriate indices to speed up foreign key relationships and status filters under load. ✅
+- **Paging Optimization**: Fix the listing route that performs in-memory pagination slicing instead of SQL pagination. ✅
 
 ### 🖥️ Challenge 4: Frontend Memory & React Optimization
 Examine frontend React components:
