@@ -6,6 +6,13 @@ Candidates are tasked with auditing the codebase to identify, debug, profile, se
 
 ---
 
+
+## My Audit
+
+This is a fork of HAQMS completed as part of an engineering evaluation.
+
+I identified and fixed 19 issues across security, performance, database optimization, and frontend. Full audit report: [REVIEW.md](./REVIEW.md)
+
 ## 🛠️ Tech Stack
 - **Frontend**: Next.js (App Router, Tailwind CSS, Lucide icons, Context API)
 - **Backend**: Node.js + Express
